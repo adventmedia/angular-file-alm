@@ -751,8 +751,11 @@
         };
         ngf.prototype.evalCapturePaste = function () {
             var _this = this;
-            var isActive = (this.capturePaste || this.capturePaste === '') && ['false', '0', 'null'].includes(this.capturePaste);
+            var isActive = this.capturePaste || this.capturePaste === '' || ['false', '0', 'null'].includes(this.capturePaste);
             if (isActive) {
+                if (this.pasteCapturer) {
+                    return; // already listening
+                }
                 this.pasteCapturer = function (e) {
                     var clip = e.clipboardData;
                     if (clip && clip.files) {
@@ -767,6 +770,7 @@
         ngf.prototype.destroyPasteListener = function () {
             if (this.pasteCapturer) {
                 window.removeEventListener('paste', this.pasteCapturer);
+                delete this.pasteCapturer;
             }
         };
         ngf.prototype.paramFileElm = function () {

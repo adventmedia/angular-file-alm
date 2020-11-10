@@ -454,8 +454,11 @@ class ngf {
         }
     }
     evalCapturePaste() {
-        const isActive = (this.capturePaste || this.capturePaste === '') && ['false', '0', 'null'].includes(this.capturePaste);
+        const isActive = this.capturePaste || this.capturePaste === '' || ['false', '0', 'null'].includes(this.capturePaste);
         if (isActive) {
+            if (this.pasteCapturer) {
+                return; // already listening
+            }
             this.pasteCapturer = (e) => {
                 const clip = e.clipboardData;
                 if (clip && clip.files) {
@@ -470,6 +473,7 @@ class ngf {
     destroyPasteListener() {
         if (this.pasteCapturer) {
             window.removeEventListener('paste', this.pasteCapturer);
+            delete this.pasteCapturer;
         }
     }
     paramFileElm() {

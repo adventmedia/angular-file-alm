@@ -95,9 +95,13 @@ export class ngf {
   }
 
   evalCapturePaste() {
-    const isActive = (this.capturePaste || (this.capturePaste as any)==='') && ['false', '0', 'null'].includes(this.capturePaste as any);
+    const isActive = this.capturePaste || (this.capturePaste as any)==='' || ['false', '0', 'null'].includes(this.capturePaste as any);
 
     if (isActive) {
+      if (this.pasteCapturer) {
+        return; // already listening
+      }
+
       this.pasteCapturer = (e: any) => {
         const clip = e.clipboardData;
         if (clip && clip.files) {
@@ -106,6 +110,7 @@ export class ngf {
       }
 
       window.addEventListener('paste', this.pasteCapturer);
+
       return;
     }
 
@@ -115,6 +120,7 @@ export class ngf {
   destroyPasteListener() {
     if (this.pasteCapturer) {
       window.removeEventListener('paste', this.pasteCapturer);
+      delete this.pasteCapturer;
     }
   }
 
