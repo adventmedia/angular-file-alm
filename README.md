@@ -71,6 +71,7 @@ const template = `
   accept    = "image/*"
   [(files)] = "files"
   maxSize   = "1024"
+  capturePaste = "1"
 />
 <button *ngIf="files" (click)="uploadFiles(files)">send files</button>
 
@@ -105,11 +106,11 @@ export class AppComponent {
     const config = new HttpRequest('POST', this.postUrl, this.myFormData, {
       reportProgress: true
     })
-    
+
     return this.HttpClient.request( config )
     .subscribe(event=>{
       this.httpEvent = event
-      
+
       if (event instanceof HttpResponse) {
         alert('upload complete, old school alert used')
       }
@@ -214,18 +215,19 @@ Combo Drop Select
 ### ngf Directive
 A base directive that provides abilities of ngfDrop and ngfSelect. Does **not** auto default nor auto host element events like hover/drag/drop (see [ngfDrop](#ngfdrop-directive) and/or [ngfSelect](#ngfselect-directive))
 ```typescript
-ngf             : ngf//reference to directive class
+ngf                 : ngf // reference to directive class
 [multiple]          : string
 [accept]            : string
-[maxSize]           : number//bytes . 1024 = 1k . 1048576 = 1mb
+[maxSize]           : number // bytes . 1024 = 1k . 1048576 = 1mb
 [ngfFixOrientation] : boolean = true
 [fileDropDisabled]  : any = false
 [selectable]        : any = false
 [(lastInvalids)]    : {file:File,type:string}[] = []
-[(lastBaseUrl)]     : string//Base64 od last file uploaded url
-[(file)]            : File//last file uploaded
+[(lastBaseUrl)]     : string // Base64 od last file uploaded url
+[(file)]            : File // last file uploaded
 [(files)]           : File[]
 (init)              : EventEmitter<ngf>
+[capturePaste]      : boolean // listen to window paste event with files
 ```
 
 ### ngfDrop Directive
@@ -294,15 +296,15 @@ import {
 export const uploadFiles(files:File[]) : Subscription {
   const postUrl = "..."
   const myFormData:FormData = new FormData()
-  
+
   files.forEach(file=>myFormData.append("file", file, "file-name.xyz"))
 
   const config = new HttpRequest("POST", postUrl, myFormData), {
     reportProgress: true
   })
-  
+
   return this.HttpClient.request( config )
-  .subscribe(event=>{    
+  .subscribe(event=>{
     if (event instanceof HttpResponse) {
       alert('upload complete, old school alert used')
     }

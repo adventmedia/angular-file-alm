@@ -33,11 +33,15 @@ export declare class ngf {
     fileChange: EventEmitter<File>;
     files: File[];
     filesChange: EventEmitter<File[]>;
+    capturePaste: boolean;
+    pasteCapturer: (e: Event) => void;
     constructor(element: ElementRef);
     initFilters(): void;
     ngOnDestroy(): void;
     ngOnInit(): void;
     ngOnChanges(changes: any): void;
+    evalCapturePaste(): void;
+    destroyPasteListener(): void;
     paramFileElm(): any;
     enableSelecting(): void;
     getValidFiles(files: File[]): File[];
