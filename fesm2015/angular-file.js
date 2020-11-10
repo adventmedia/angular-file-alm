@@ -463,6 +463,7 @@ class ngf {
                 const clip = e.clipboardData;
                 if (clip && clip.files) {
                     this.handleFiles(clip.files);
+                    e.preventDefault();
                 }
             };
             window.addEventListener('paste', this.pasteCapturer);

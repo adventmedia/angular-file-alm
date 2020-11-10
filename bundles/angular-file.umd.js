@@ -760,6 +760,7 @@
                     var clip = e.clipboardData;
                     if (clip && clip.files) {
                         _this.handleFiles(clip.files);
+                        e.preventDefault();
                     }
                 };
                 window.addEventListener('paste', this.pasteCapturer);
