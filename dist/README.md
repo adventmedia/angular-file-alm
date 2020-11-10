@@ -215,18 +215,19 @@ Combo Drop Select
 ### ngf Directive
 A base directive that provides abilities of ngfDrop and ngfSelect. Does **not** auto default nor auto host element events like hover/drag/drop (see [ngfDrop](#ngfdrop-directive) and/or [ngfSelect](#ngfselect-directive))
 ```typescript
-ngf             : ngf//reference to directive class
+ngf                 : ngf // reference to directive class
 [multiple]          : string
 [accept]            : string
-[maxSize]           : number//bytes . 1024 = 1k . 1048576 = 1mb
+[maxSize]           : number // bytes . 1024 = 1k . 1048576 = 1mb
 [ngfFixOrientation] : boolean = true
 [fileDropDisabled]  : any = false
 [selectable]        : any = false
 [(lastInvalids)]    : {file:File,type:string}[] = []
-[(lastBaseUrl)]     : string//Base64 od last file uploaded url
-[(file)]            : File//last file uploaded
+[(lastBaseUrl)]     : string // Base64 od last file uploaded url
+[(file)]            : File // last file uploaded
 [(files)]           : File[]
 (init)              : EventEmitter<ngf>
+[capturePaste]      : boolean // listen to window paste event with files
 ```
 
 ### ngfDrop Directive
