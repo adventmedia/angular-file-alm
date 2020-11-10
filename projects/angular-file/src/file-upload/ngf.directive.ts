@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, ElementRef, Input, Output, HostListener } from '@angular/core';
+import { Directive, EventEmitter, ElementRef, Input, Output, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { createInvisibleFileInputWrap, isFileInput, detectSwipe } from "./doc-event-help.functions"
 import {
   acceptType, InvalidFileItem,
@@ -32,18 +32,21 @@ export class ngf {
   @Input() fileDropDisabled:boolean = false
   @Input() selectable:boolean = false
   @Output('init') directiveInit:EventEmitter<ngf> = new EventEmitter()
-  
+
   @Input() lastInvalids:InvalidFileItem[] = []
   @Output() lastInvalidsChange:EventEmitter<{file:File,type:string}[]> = new EventEmitter()
 
   @Input() lastBaseUrl !: string//base64 last file uploaded url
   @Output() lastBaseUrlChange:EventEmitter<string> = new EventEmitter()
-  
+
   @Input() file !: File//last file uploaded
   @Output() fileChange:EventEmitter<File> = new EventEmitter()
 
   @Input() files:File[] = []
   @Output() filesChange:EventEmitter<File[]> = new EventEmitter<File[]>();
+
+  @Input() capturePaste = true;
+  pasteCapturer !: (e: Event) => void;
 
   constructor(public element:ElementRef){
     this.initFilters()
@@ -82,15 +85,30 @@ export class ngf {
     if( changes.accept ){
       this.paramFileElm().setAttribute('accept', changes.accept.currentValue || '*')
     }
+
+    if (changes.capturePaste) {
+      if (this.capturePaste) {
+        this.pasteCapturer = (e: any) => {
+          const clip = e.clipboardData;
+          if (clip && clip.files) {
+            this.handleFiles(clip.files);
+          }
+        }
+
+        window.addEventListener('paste', this.pasteCapturer);
+      } else if (this.pasteCapturer) {
+        window.removeEventListener('paste', this.pasteCapturer);
+      }
+    }
   }
 
   paramFileElm(){
     if( this.fileElm )return this.fileElm//already defined
-    
+
     //elm is a file input
     const isFile = isFileInput( this.element.nativeElement )
     if(isFile)return this.fileElm = this.element.nativeElement
-    
+
     //create foo file input
     const label = createInvisibleFileInputWrap()
     this.fileElm = label.getElementsByTagName('input')[0]
@@ -139,6 +157,7 @@ export class ngf {
     return rtn
   }
 
+  // Primary handler of files coming in
   handleFiles(files:File[]){
     const valids = this.getValidFiles(files)
 
@@ -147,7 +166,7 @@ export class ngf {
     }else{
       delete this.lastInvalids
     }
-    
+
     this.lastInvalidsChange.emit(this.lastInvalids)
 
     if( valids.length ){
@@ -170,7 +189,7 @@ export class ngf {
 
     //below break memory ref and doesnt act like a que
     //this.files = files//causes memory change which triggers bindings like <ngfFormData [files]="files"></ngfFormData>
-    
+
     this.filesChange.emit( this.files )
 
     if(files.length){
@@ -201,7 +220,7 @@ export class ngf {
     if (elm.getAttribute('disabled') || this.fileDropDisabled){
       return false;
     }
-    
+
     var r = detectSwipe(evt);
     // prevent the click if it is a swipe
     if ( r!==false ) return r;
@@ -305,7 +324,7 @@ export class ngf {
     if( noFilters ){
       return true//we have no filters so all files are valid
     }
-    
+
     return this.getFileFilterFailName(file) ? false : true
   }
 
@@ -317,7 +336,7 @@ export class ngf {
     }
     return true
   }
-  
+
   protected _acceptFilter(item:File):boolean {
     return acceptType(this.accept, item.type, item.name)
   }
