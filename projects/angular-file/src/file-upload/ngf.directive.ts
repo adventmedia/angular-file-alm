@@ -45,7 +45,7 @@ export class ngf {
   @Input() files:File[] = []
   @Output() filesChange:EventEmitter<File[]> = new EventEmitter<File[]>();
 
-  @Input() capturePaste = true;
+  @Input() capturePaste: boolean; // window paste file watching (empty string turns on)
   pasteCapturer !: (e: Event) => void;
 
   constructor(public element:ElementRef){
@@ -64,6 +64,7 @@ export class ngf {
 
   ngOnDestroy(){
     delete this.fileElm//faster memory release of dom element
+    this.destroyPasteListener();
   }
 
   ngOnInit(){
@@ -74,6 +75,8 @@ export class ngf {
     if( this.multiple ){
       this.paramFileElm().setAttribute('multiple', this.multiple)
     }
+
+    this.evalCapturePaste();
 
     //create reference to this class with one cycle delay to avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(()=>{
@@ -87,18 +90,31 @@ export class ngf {
     }
 
     if (changes.capturePaste) {
-      if (this.capturePaste) {
-        this.pasteCapturer = (e: any) => {
-          const clip = e.clipboardData;
-          if (clip && clip.files) {
-            this.handleFiles(clip.files);
-          }
-        }
+      this.evalCapturePaste();
+    }
+  }
 
-        window.addEventListener('paste', this.pasteCapturer);
-      } else if (this.pasteCapturer) {
-        window.removeEventListener('paste', this.pasteCapturer);
+  evalCapturePaste() {
+    const isActive = (this.capturePaste || (this.capturePaste as any)==='') && ['false', '0', 'null'].includes(this.capturePaste as any);
+
+    if (isActive) {
+      this.pasteCapturer = (e: any) => {
+        const clip = e.clipboardData;
+        if (clip && clip.files) {
+          this.handleFiles(clip.files);
+        }
       }
+
+      window.addEventListener('paste', this.pasteCapturer);
+      return;
+    }
+
+    this.destroyPasteListener();
+  }
+
+  destroyPasteListener() {
+    if (this.pasteCapturer) {
+      window.removeEventListener('paste', this.pasteCapturer);
     }
   }
 
