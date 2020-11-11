@@ -462,7 +462,7 @@ class ngf {
             }
             this.pasteCapturer = (e) => {
                 const clip = e.clipboardData;
-                if (clip && clip.files) {
+                if (clip && clip.files && clip.files.length) {
                     this.handleFiles(clip.files);
                     e.preventDefault();
                 }

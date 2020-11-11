@@ -759,7 +759,7 @@
                 }
                 this.pasteCapturer = function (e) {
                     var clip = e.clipboardData;
-                    if (clip && clip.files) {
+                    if (clip && clip.files && clip.files.length) {
                         _this.handleFiles(clip.files);
                         e.preventDefault();
                     }
