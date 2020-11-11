@@ -1,7 +1,7 @@
 # angular-file - Change Log
 All notable changes to this project will be documented here.
 
-## 3.2.1 - (2020-11-11)
+## 3.2.2 - (2020-11-11)
 - Built with ng10
 - new [capturePaste] window event listener for files (default off)
 - selectable attribute now reads string values of 'false', 'null', '0' as false
