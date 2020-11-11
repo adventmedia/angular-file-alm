@@ -433,7 +433,8 @@ class ngf {
         this.destroyPasteListener();
     }
     ngOnInit() {
-        if (this.selectable) {
+        const selectable = (this.selectable || this.selectable === '') && !['false', 'null', '0'].includes(this.selectable);
+        if (selectable) {
             this.enableSelecting();
         }
         if (this.multiple) {
