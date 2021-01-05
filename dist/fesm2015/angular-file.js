@@ -433,7 +433,8 @@ class ngf {
         this.destroyPasteListener();
     }
     ngOnInit() {
-        if (this.selectable) {
+        const selectable = (this.selectable || this.selectable === '') && !['false', 'null', '0'].includes(this.selectable);
+        if (selectable) {
             this.enableSelecting();
         }
         if (this.multiple) {
@@ -461,8 +462,9 @@ class ngf {
             }
             this.pasteCapturer = (e) => {
                 const clip = e.clipboardData;
-                if (clip && clip.files) {
+                if (clip && clip.files && clip.files.length) {
                     this.handleFiles(clip.files);
+                    e.preventDefault();
                 }
             };
             window.addEventListener('paste', this.pasteCapturer);

@@ -1,0 +1,49 @@
+{
+  "name": "angular-file",
+  "version": "3.1.0",
+  "description": "Easy to use Angular directives for user file selections",
+  "keywords": [
+    "Angular",
+    "ng files",
+    "file-upload",
+    "ng-file-upload",
+    "ng2-file-upload",
+    "angular-file-upload"
+  ],
+  "author": "Acker Apple",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ackerapple/angular-file.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ackerapple/angular-file/issues"
+  },
+  "homepage": "https://github.com/ackerapple/angular-file#readme",
+  "contributors": [
+    {
+      "name": "Vyacheslav Chub",
+      "email": "vyacheslav.chub@valor-software.com",
+      "url": "https://github.com/buchslava"
+    },
+    {
+      "name": "Dmitriy Shekhovtsov",
+      "email": "valorkin@gmail.com",
+      "url": "https://github.com/valorkin"
+    },
+    {
+      "name": "Adrian Faciu",
+      "email": "adrian.faciu@gmail.com",
+      "url": "https://github.com/adrianfaciu"
+    },
+    {
+      "name": "Oleksandr Telnov",
+      "email": "otelnov@gmail.com",
+      "url": "https://github.com/otelnov"
+    },
+    {
+      "name": "Acker Apple",
+      "url": "https://github.com/ackerapple"
+    }
+  ]
+}

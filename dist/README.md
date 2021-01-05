@@ -227,7 +227,7 @@ ngf                 : ngf // reference to directive class
 [(file)]            : File // last file uploaded
 [(files)]           : File[]
 (init)              : EventEmitter<ngf>
-[capturePaste]      : boolean // listen to window paste event with files
+[capturePaste]      : boolean // listen to window paste event for files
 ```
 
 ### ngfDrop Directive

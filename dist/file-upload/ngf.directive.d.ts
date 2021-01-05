@@ -20,7 +20,7 @@ export declare class ngf {
     maxSize: number;
     ngfFixOrientation: boolean;
     fileDropDisabled: boolean;
-    selectable: boolean;
+    selectable: boolean | string;
     directiveInit: EventEmitter<ngf>;
     lastInvalids: InvalidFileItem[];
     lastInvalidsChange: EventEmitter<{

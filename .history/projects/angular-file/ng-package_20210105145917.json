@@ -1,0 +1,10 @@
+{
+  "dest": "../dist",
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "assets": [
+    "CHANGELOG.md", "LICENSE"
+  ],
+  "lib": {
+    "entryFile": "public-api.ts"
+  }
+}

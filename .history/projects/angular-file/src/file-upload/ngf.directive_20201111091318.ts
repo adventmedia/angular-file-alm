@@ -30,7 +30,7 @@ export class ngf {
   @Input() ngfFixOrientation:boolean = true
 
   @Input() fileDropDisabled:boolean = false
-  @Input() selectable:boolean = false
+  @Input() selectable: boolean | string = false
   @Output('init') directiveInit:EventEmitter<ngf> = new EventEmitter()
 
   @Input() lastInvalids:InvalidFileItem[] = []
@@ -68,7 +68,8 @@ export class ngf {
   }
 
   ngOnInit(){
-    if( this.selectable ){
+    const selectable = (this.selectable || this.selectable==='') && !['false', 'null', '0'].includes(this.selectable as string);
+    if( selectable ){
       this.enableSelecting()
     }
 
@@ -102,10 +103,11 @@ export class ngf {
         return; // already listening
       }
 
-      this.pasteCapturer = (e: any) => {
-        const clip = e.clipboardData;
+      this.pasteCapturer = (e: Event) => {
+        const clip = (e as any).clipboardData;
         if (clip && clip.files) {
           this.handleFiles(clip.files);
+          e.preventDefault();
         }
       }
 

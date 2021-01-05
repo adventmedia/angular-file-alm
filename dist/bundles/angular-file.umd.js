@@ -729,7 +729,8 @@
         };
         ngf.prototype.ngOnInit = function () {
             var _this = this;
-            if (this.selectable) {
+            var selectable = (this.selectable || this.selectable === '') && !['false', 'null', '0'].includes(this.selectable);
+            if (selectable) {
                 this.enableSelecting();
             }
             if (this.multiple) {
@@ -758,8 +759,9 @@
                 }
                 this.pasteCapturer = function (e) {
                     var clip = e.clipboardData;
-                    if (clip && clip.files) {
+                    if (clip && clip.files && clip.files.length) {
                         _this.handleFiles(clip.files);
+                        e.preventDefault();
                     }
                 };
                 window.addEventListener('paste', this.pasteCapturer);
