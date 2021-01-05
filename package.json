@@ -18,7 +18,8 @@
     "start": "npm run compile:templates && ng serve --open",
     "test:watch": "ng test",
     "copy:www": "cp -R www/. .",
-    "deploy": "npm run build && npm run copy:www && git add . && git commit -m 'update' && git push"
+    "deploy": "npm run build && npm run copy:www && npm run save",
+    "save": "git add . && git commit -m 'update' && git push"
   },
   "repository": {
     "type": "git",
