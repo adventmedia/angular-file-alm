@@ -1,6 +1,6 @@
 {
   "name": "angular-file",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "Easy to use Angular directives for user file selections",
   "keywords": [
     "Angular",
@@ -20,13 +20,6 @@
     "url": "https://github.com/ackerapple/angular-file/issues"
   },
   "homepage": "https://github.com/ackerapple/angular-file#readme",
-  "peerDependencies": {
-    "@angular/common": "^9.1.9",
-    "@angular/core": "^9.1.9"
-  },
-  "dependencies": {
-    "tslib": "^1.10.0"
-  },
   "contributors": [
     {
       "name": "Vyacheslav Chub",
@@ -60,5 +53,8 @@
   "fesm2015": "fesm2015/angular-file.js",
   "typings": "angular-file.d.ts",
   "metadata": "angular-file.metadata.json",
-  "sideEffects": false
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
 }
