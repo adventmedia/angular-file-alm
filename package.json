@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "ng test demo --browsers PhantomJS --watch=false",
-    "stats": "webpack-bundle-analyzer demo/www/stats.json",
-    "stats:html": "webpack-bundle-analyzer demo/www/stats.json --mode static --report demo/www/stats.html --no-open",
+    "stats": "webpack-bundle-analyzer www/stats.json",
+    "stats:html": "webpack-bundle-analyzer www/stats.json --mode static --report demo/www/stats.html --no-open",
     "watch": "npm-run-all --parallel watch:demo:js watch:templates",
     "watch:demo:js": "ng serve demo --port 4201 --open",
     "build": "ng build demo --stats-json --prod --output-hashing=none",
@@ -17,7 +17,8 @@
     "build:watch": "ngc -p src --watch --skip-bundles",
     "start": "npm run compile:templates && ng serve --open",
     "test:watch": "ng test",
-    "deploy": "npm run build && git add . && git commit -m 'update' && git push"
+    "copy:www": "cp -R www/. .",
+    "deploy": "npm run build && npm run copy:www && git add . && git commit -m 'update' && git push"
   },
   "repository": {
     "type": "git",
