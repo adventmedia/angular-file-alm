@@ -42,6 +42,7 @@ export const string = "<style>"+"\r"+
 "\n        [maxSize]  = \"maxSize\""+"\r"+
 "\n        [(lastInvalids)] = \"lastInvalids\""+"\r"+
 "\n        (filesChange) = \"lastFileAt=getDate()\""+"\r"+
+"\n        capturePaste = \"1\""+"\r"+
 "\n      />"+"\r"+
 "\n    </div>"+"\r"+
 "\n"+"\r"+
@@ -143,14 +144,14 @@ export const string = "<style>"+"\r"+
 "\n      <input type=\"text\" value=\"image/*\" disabled readonly=\"\" style=\"width:100%\" />"+"\r"+
 "\n    </div>"+"\r"+
 "\n  </div>"+"\r"+
-"\n  "+"\r"+
+"\n"+"\r"+
 "\n  <div class=\"inline-block\">"+"\r"+
 "\n    <strong>maxSize byte</strong>"+"\r"+
 "\n    <div>"+"\r"+
 "\n      <input type=\"number\" [(ngModel)]=\"maxSize\" placeholder=\"1024 == 1mb\" />"+"\r"+
 "\n    </div>"+"\r"+
 "\n  </div>"+"\r"+
-"\n  "+"\r"+
+"\n"+"\r"+
 "\n  <div class=\"inline-block\">"+"\r"+
 "\n    <strong>fileDropDisabled</strong>"+"\r"+
 "\n    <div>"+"\r"+

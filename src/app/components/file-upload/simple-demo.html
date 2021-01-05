@@ -42,6 +42,7 @@
         [maxSize]  = "maxSize"
         [(lastInvalids)] = "lastInvalids"
         (filesChange) = "lastFileAt=getDate()"
+        capturePaste = "1"
       />
     </div>
 
@@ -143,14 +144,14 @@
       <input type="text" value="image/*" disabled readonly="" style="width:100%" />
     </div>
   </div>
-  
+
   <div class="inline-block">
     <strong>maxSize byte</strong>
     <div>
       <input type="number" [(ngModel)]="maxSize" placeholder="1024 == 1mb" />
     </div>
   </div>
-  
+
   <div class="inline-block">
     <strong>fileDropDisabled</strong>
     <div>
