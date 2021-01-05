@@ -16,7 +16,8 @@
     "compile:templates:demo": "ack-pug-bundler src/app/components src/app/components --oneToOne --includeMarkdowns --includeHtmls --outType ts --outFileExt .template.ts",
     "build:watch": "ngc -p src --watch --skip-bundles",
     "start": "npm run compile:templates && ng serve --open",
-    "test:watch": "ng test"
+    "test:watch": "ng test",
+    "deploy": "npm run build && git add . && git commit -m 'update' && git push"
   },
   "repository": {
     "type": "git",
