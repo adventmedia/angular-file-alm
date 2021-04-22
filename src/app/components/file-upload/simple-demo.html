@@ -12,8 +12,12 @@
 
   .inline-block{
     display:inline-block;
-    margin:.2em;
   }
+
+  .margin {margin:.15em;padding:.15em;}
+
+  .flex {display:flex;}
+  .flex-wrap {display:flex;flex-wrap:wrap}
 </style>
 
 <ngfFormData
@@ -28,38 +32,44 @@
 ></ngfUploadStatus>
 
 
-<div class="inline-block">
-    <h3>Select Files</h3>
-
-    <div class="inline-block">
+<h3>Select Files</h3>
+<div class="flex-wrap margin">
+  <div class="flex-wrap">
+    <div class="margin">
       Multiple
-      <input
-        ngfSelect
-        multiple
-        type      = "file"
-        [(files)] = "files"
-        [accept]  = "accept"
-        [maxSize]  = "maxSize"
-        [(lastInvalids)] = "lastInvalids"
-        (filesChange) = "lastFileAt=getDate()"
-        capturePaste = "1"
-      />
+      <div class="flex margin" style="border:1px solid #555;border-radius: 5px;">
+        <input
+          ngfSelect
+          multiple
+          type      = "file"
+          [(files)] = "files"
+          [accept]  = "accept"
+          [maxSize]  = "maxSize"
+          [(lastInvalids)] = "lastInvalids"
+          (filesChange) = "lastFileAt=getDate()"
+          capturePaste = "1"
+        />
+        <button *ngIf="files.length" type="button" (click)="files.length = 0">clear</button>
+      </div>
     </div>
 
-    <div class="inline-block">
+    <div class="margin">
       Single
-      <input
-        ngfSelect
-        type       = "file"
-        [(files)]  = "files"
-        [accept]   = "accept"
-        [maxSize]  = "maxSize"
-        [(lastInvalids)] = "lastInvalids"
-        (filesChange) = "lastFileAt=getDate()"
-      />
+      <div class="flex margin" style="border:1px solid #555;border-radius: 5px;">
+        <input
+          ngfSelect
+          type       = "file"
+          [(files)]  = "files"
+          [accept]   = "accept"
+          [maxSize]  = "maxSize"
+          [(lastInvalids)] = "lastInvalids"
+          (filesChange) = "lastFileAt=getDate()"
+        />
+        <button *ngIf="files.length" type="button" (click)="files.length = 0">clear</button>
+      </div>
     </div>
 
-    <div class="inline-block">
+    <div class="inline-block margin">
       Element
       <div
         ngfSelect
@@ -76,7 +86,7 @@
       </div>
     </div>
 
-    <div class="inline-block">
+    <div class="inline-block margin">
       <strong>Images</strong> Only
       <div
         ngfSelect
@@ -92,11 +102,12 @@
         Tap to Select
       </div>
     </div>
+  </div>
 </div>
 
 <div>
   <h3>Drop Files</h3>
-  <div class="inline-block">
+  <div class="inline-block margin">
     <div
       ngfDrop
       [(validDrag)]    = "baseDropValid"
@@ -120,7 +131,7 @@
     </div>
   </div>
 
-  <div class="inline-block">
+  <div class="inline-block margin">
     <div
       ngfDrop
       multiple         = "1"
@@ -145,14 +156,14 @@
     </div>
   </div>
 
-  <div class="inline-block">
+  <div class="inline-block margin">
     <strong>maxSize byte</strong>
     <div>
       <input type="number" [(ngModel)]="maxSize" placeholder="1024 == 1mb" />
     </div>
   </div>
 
-  <div class="inline-block">
+  <div class="inline-block margin">
     <strong>fileDropDisabled</strong>
     <div>
       <input type="checkbox" [(ngModel)]="fileDropDisabled" name="fileDropDisabled" id="fileDropDisabled" />

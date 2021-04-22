@@ -12,8 +12,12 @@ export const string = "<style>"+"\r"+
 "\n"+"\r"+
 "\n  .inline-block{"+"\r"+
 "\n    display:inline-block;"+"\r"+
-"\n    margin:.2em;"+"\r"+
 "\n  }"+"\r"+
+"\n"+"\r"+
+"\n  .margin {margin:.15em;padding:.15em;}"+"\r"+
+"\n"+"\r"+
+"\n  .flex {display:flex;}"+"\r"+
+"\n  .flex-wrap {display:flex;flex-wrap:wrap}"+"\r"+
 "\n</style>"+"\r"+
 "\n"+"\r"+
 "\n<ngfFormData"+"\r"+
@@ -28,38 +32,44 @@ export const string = "<style>"+"\r"+
 "\n></ngfUploadStatus>"+"\r"+
 "\n"+"\r"+
 "\n"+"\r"+
-"\n<div class=\"inline-block\">"+"\r"+
-"\n    <h3>Select Files</h3>"+"\r"+
-"\n"+"\r"+
-"\n    <div class=\"inline-block\">"+"\r"+
+"\n<h3>Select Files</h3>"+"\r"+
+"\n<div class=\"flex-wrap margin\">"+"\r"+
+"\n  <div class=\"flex-wrap\">"+"\r"+
+"\n    <div class=\"margin\">"+"\r"+
 "\n      Multiple"+"\r"+
-"\n      <input"+"\r"+
-"\n        ngfSelect"+"\r"+
-"\n        multiple"+"\r"+
-"\n        type      = \"file\""+"\r"+
-"\n        [(files)] = \"files\""+"\r"+
-"\n        [accept]  = \"accept\""+"\r"+
-"\n        [maxSize]  = \"maxSize\""+"\r"+
-"\n        [(lastInvalids)] = \"lastInvalids\""+"\r"+
-"\n        (filesChange) = \"lastFileAt=getDate()\""+"\r"+
-"\n        capturePaste = \"1\""+"\r"+
-"\n      />"+"\r"+
+"\n      <div class=\"flex margin\" style=\"border:1px solid #555;border-radius: 5px;\">"+"\r"+
+"\n        <input"+"\r"+
+"\n          ngfSelect"+"\r"+
+"\n          multiple"+"\r"+
+"\n          type      = \"file\""+"\r"+
+"\n          [(files)] = \"files\""+"\r"+
+"\n          [accept]  = \"accept\""+"\r"+
+"\n          [maxSize]  = \"maxSize\""+"\r"+
+"\n          [(lastInvalids)] = \"lastInvalids\""+"\r"+
+"\n          (filesChange) = \"lastFileAt=getDate()\""+"\r"+
+"\n          capturePaste = \"1\""+"\r"+
+"\n        />"+"\r"+
+"\n        <button *ngIf=\"files.length\" type=\"button\" (click)=\"files.length = 0\">clear</button>"+"\r"+
+"\n      </div>"+"\r"+
 "\n    </div>"+"\r"+
 "\n"+"\r"+
-"\n    <div class=\"inline-block\">"+"\r"+
+"\n    <div class=\"margin\">"+"\r"+
 "\n      Single"+"\r"+
-"\n      <input"+"\r"+
-"\n        ngfSelect"+"\r"+
-"\n        type       = \"file\""+"\r"+
-"\n        [(files)]  = \"files\""+"\r"+
-"\n        [accept]   = \"accept\""+"\r"+
-"\n        [maxSize]  = \"maxSize\""+"\r"+
-"\n        [(lastInvalids)] = \"lastInvalids\""+"\r"+
-"\n        (filesChange) = \"lastFileAt=getDate()\""+"\r"+
-"\n      />"+"\r"+
+"\n      <div class=\"flex margin\" style=\"border:1px solid #555;border-radius: 5px;\">"+"\r"+
+"\n        <input"+"\r"+
+"\n          ngfSelect"+"\r"+
+"\n          type       = \"file\""+"\r"+
+"\n          [(files)]  = \"files\""+"\r"+
+"\n          [accept]   = \"accept\""+"\r"+
+"\n          [maxSize]  = \"maxSize\""+"\r"+
+"\n          [(lastInvalids)] = \"lastInvalids\""+"\r"+
+"\n          (filesChange) = \"lastFileAt=getDate()\""+"\r"+
+"\n        />"+"\r"+
+"\n        <button *ngIf=\"files.length\" type=\"button\" (click)=\"files.length = 0\">clear</button>"+"\r"+
+"\n      </div>"+"\r"+
 "\n    </div>"+"\r"+
 "\n"+"\r"+
-"\n    <div class=\"inline-block\">"+"\r"+
+"\n    <div class=\"inline-block margin\">"+"\r"+
 "\n      Element"+"\r"+
 "\n      <div"+"\r"+
 "\n        ngfSelect"+"\r"+
@@ -76,7 +86,7 @@ export const string = "<style>"+"\r"+
 "\n      </div>"+"\r"+
 "\n    </div>"+"\r"+
 "\n"+"\r"+
-"\n    <div class=\"inline-block\">"+"\r"+
+"\n    <div class=\"inline-block margin\">"+"\r"+
 "\n      <strong>Images</strong> Only"+"\r"+
 "\n      <div"+"\r"+
 "\n        ngfSelect"+"\r"+
@@ -92,11 +102,12 @@ export const string = "<style>"+"\r"+
 "\n        Tap to Select"+"\r"+
 "\n      </div>"+"\r"+
 "\n    </div>"+"\r"+
+"\n  </div>"+"\r"+
 "\n</div>"+"\r"+
 "\n"+"\r"+
 "\n<div>"+"\r"+
 "\n  <h3>Drop Files</h3>"+"\r"+
-"\n  <div class=\"inline-block\">"+"\r"+
+"\n  <div class=\"inline-block margin\">"+"\r"+
 "\n    <div"+"\r"+
 "\n      ngfDrop"+"\r"+
 "\n      [(validDrag)]    = \"baseDropValid\""+"\r"+
@@ -120,7 +131,7 @@ export const string = "<style>"+"\r"+
 "\n    </div>"+"\r"+
 "\n  </div>"+"\r"+
 "\n"+"\r"+
-"\n  <div class=\"inline-block\">"+"\r"+
+"\n  <div class=\"inline-block margin\">"+"\r"+
 "\n    <div"+"\r"+
 "\n      ngfDrop"+"\r"+
 "\n      multiple         = \"1\""+"\r"+
@@ -145,14 +156,14 @@ export const string = "<style>"+"\r"+
 "\n    </div>"+"\r"+
 "\n  </div>"+"\r"+
 "\n"+"\r"+
-"\n  <div class=\"inline-block\">"+"\r"+
+"\n  <div class=\"inline-block margin\">"+"\r"+
 "\n    <strong>maxSize byte</strong>"+"\r"+
 "\n    <div>"+"\r"+
 "\n      <input type=\"number\" [(ngModel)]=\"maxSize\" placeholder=\"1024 == 1mb\" />"+"\r"+
 "\n    </div>"+"\r"+
 "\n  </div>"+"\r"+
 "\n"+"\r"+
-"\n  <div class=\"inline-block\">"+"\r"+
+"\n  <div class=\"inline-block margin\">"+"\r"+
 "\n    <strong>fileDropDisabled</strong>"+"\r"+
 "\n    <div>"+"\r"+
 "\n      <input type=\"checkbox\" [(ngModel)]=\"fileDropDisabled\" name=\"fileDropDisabled\" id=\"fileDropDisabled\" />"+"\r"+

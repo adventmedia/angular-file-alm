@@ -1,6 +1,5 @@
 export const string = "import { Component } from '@angular/core'"+
 "\nimport { Subscription } from 'rxjs'"+
-"\nimport { string as template } from \"./simple-demo.template\""+
 "\nimport {"+
 "\n  HttpClient, HttpRequest,"+
 "\n  HttpResponse, HttpEvent"+
@@ -8,7 +7,7 @@ export const string = "import { Component } from '@angular/core'"+
 "\n"+
 "\n@Component({"+
 "\n  selector: 'simple-demo',"+
-"\n  template:template"+
+"\n  templateUrl: './simple-demo.html'"+
 "\n})"+
 "\nexport class SimpleDemoComponent {"+
 "\n  accept = '*'"+
@@ -47,12 +46,12 @@ export const string = "import { Component } from '@angular/core'"+
 "\n      this.sendableFormData, {"+
 "\n      reportProgress: true//, responseType: 'text'"+
 "\n    })"+
-"\n    "+
+"\n"+
 "\n    return this.httpEmitter = this.HttpClient.request(req)"+
 "\n    .subscribe("+
 "\n      event=>{"+
 "\n        this.httpEvent = event"+
-"\n        "+
+"\n"+
 "\n        if (event instanceof HttpResponse) {"+
 "\n          delete this.httpEmitter"+
 "\n          console.log('request done', event)"+

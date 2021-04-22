@@ -12,7 +12,7 @@ let tabDesc:any ={
 @Component({
   selector: 'file-upload-section',
   //templateUrl: './file-upload-section.html'
-  template:template
+  template: template
 })
 export class FileUploadSectionComponent {
   public name:string = 'File Upload';

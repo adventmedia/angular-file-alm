@@ -6,10 +6,7 @@ import {
   HttpResponse, HttpEvent
 } from '@angular/common/http'
 
-@Component({
-  selector: 'simple-demo',
-  template:template
-})
+@Component({ selector: 'simple-demo', template: template })
 export class SimpleDemoComponent {
   accept = '*'
   files:File[] = []
@@ -47,12 +44,12 @@ export class SimpleDemoComponent {
       this.sendableFormData, {
       reportProgress: true//, responseType: 'text'
     })
-    
+
     return this.httpEmitter = this.HttpClient.request(req)
     .subscribe(
       event=>{
         this.httpEvent = event
-        
+
         if (event instanceof HttpResponse) {
           delete this.httpEmitter
           console.log('request done', event)
