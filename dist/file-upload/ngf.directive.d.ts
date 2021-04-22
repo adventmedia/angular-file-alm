@@ -1,4 +1,4 @@
-import { EventEmitter, ElementRef } from '@angular/core';
+import { EventEmitter, ElementRef, SimpleChanges } from '@angular/core';
 import { InvalidFileItem } from "./fileTools";
 export interface dragMeta {
     type: string;
@@ -33,13 +33,14 @@ export declare class ngf {
     fileChange: EventEmitter<File>;
     files: File[];
     filesChange: EventEmitter<File[]>;
+    fileSelectStart: EventEmitter<Event>;
     capturePaste: boolean;
     pasteCapturer: (e: Event) => void;
     constructor(element: ElementRef);
     initFilters(): void;
     ngOnDestroy(): void;
     ngOnInit(): void;
-    ngOnChanges(changes: any): void;
+    ngOnChanges(changes: SimpleChanges): void;
     evalCapturePaste(): void;
     destroyPasteListener(): void;
     paramFileElm(): any;
@@ -50,13 +51,13 @@ export declare class ngf {
     que(files: File[]): void;
     /** called when input has files */
     changeFn(event: any): void;
-    clickHandler(evt: any): boolean;
-    beforeSelect(): void;
+    clickHandler(evt: Event): boolean;
+    beforeSelect(event: Event): void;
+    clearFileElmValue(): void;
     isEmptyAfterSelection(): boolean;
-    eventToTransfer(event: any): any;
     stopEvent(event: any): any;
     transferHasFiles(transfer: any): any;
-    eventToFiles(event: Event): any;
+    eventToFiles(event: Event): any[];
     applyExifRotations(files: File[]): Promise<File[]>;
     onChange(event: Event): void;
     getFileFilterFailName(file: File): string | undefined;
@@ -64,6 +65,13 @@ export declare class ngf {
     isFilesValid(files: File[]): boolean;
     protected _acceptFilter(item: File): boolean;
     protected _fileSizeFilter(item: File): boolean;
-    /** browsers try hard to conceal data about file drags, this tends to undo that */
-    filesToWriteableObject(files: File[]): dragMeta[];
 }
+/** browsers try hard to conceal data about file drags, this tends to undo that */
+export declare function filesToWriteableObject(files: File[]): dragMeta[];
+export declare function eventToTransfer(event: any): TransferObject;
+interface TransferObject {
+    items?: any[];
+    files?: any[];
+    dropEffect?: 'copy';
+}
+export {};

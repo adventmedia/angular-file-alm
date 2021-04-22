@@ -62,7 +62,7 @@ import { platformBrowserDynamic } from "@angular/platform-browser-dynamic"
 import { BrowserModule } from '@angular/platform-browser'
 import { Subscription } from 'rxjs'
 
-//two ways to upload files
+// two ways to upload files
 const template = `
 <input
   ngf
@@ -213,7 +213,9 @@ Combo Drop Select
 - [ngfUploadStatus Directive](#ngfuploadstatus-directive)
 
 ### ngf Directive
+
 A base directive that provides abilities of ngfDrop and ngfSelect. Does **not** auto default nor auto host element events like hover/drag/drop (see [ngfDrop](#ngfdrop-directive) and/or [ngfSelect](#ngfselect-directive))
+
 ```typescript
 ngf                 : ngf // reference to directive class
 [multiple]          : string
@@ -228,10 +230,13 @@ ngf                 : ngf // reference to directive class
 [(files)]           : File[]
 (init)              : EventEmitter<ngf>
 [capturePaste]      : boolean // listen to window paste event for files
+(fileSelectStart)   : EventEmitter<Event> // Event fired for user selecting files starting
 ```
 
 ### ngfDrop Directive
+
 Extends [ngf](#ngf-directive) and then auto hosts element event watching of hover/drag/drop
+
 ```javascript
 [fileDropDisabled]  : any = false
 (fileOver)      :EventEmitter<any> = new EventEmitter()
@@ -260,14 +265,18 @@ Extends [ngf](#ngf-directive) and auto engages click base file selecting
 ```
 
 ### ngfUploadStatus Directive
+
 Does calculations of an upload event and provideds percent of upload completed
+
 ```typescript
 [(percent)]:number
 [httpEvent]:Event
 ```
 
 ### ngfFormData Directive
+
 Converts files to FormData
+
 ```typescript
 [files]:File[]
 [postName]:string = "file"
@@ -276,6 +285,7 @@ Converts files to FormData
 ```
 
 ## Uploading
+
 Angular, natively, makes uploading files so very easy!
 
 *Did you know?*

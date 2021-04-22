@@ -2,7 +2,7 @@ import {
   Directive, EventEmitter,
   HostListener, Input, Output
 } from '@angular/core';
-import { ngf, dragMeta } from "./ngf.directive"
+import { ngf, dragMeta, eventToTransfer, filesToWriteableObject } from "./ngf.directive"
 
 @Directive({
   selector: "[ngfDrop]",
@@ -48,11 +48,11 @@ export class ngfDrop extends ngf {
       return
     }
 
-    const transfer = this.eventToTransfer(event)
+    const transfer = eventToTransfer(event)
 
     let files = this.eventToFiles(event)
 
-    let jsonFiles = this.filesToWriteableObject(files)
+    let jsonFiles = filesToWriteableObject(files)
     this.dragFilesChange.emit( this.dragFiles=jsonFiles )
 
     if( files.length ){
@@ -67,7 +67,7 @@ export class ngfDrop extends ngf {
     this.invalidDrag = !this.validDrag
     this.invalidDragChange.emit(this.invalidDrag)
 
-    transfer.dropEffect = 'copy'//change cursor and such
+    transfer.dropEffect = 'copy' // change cursor and visual display
     this.stopEvent(event)
     this.fileOver.emit(true)
   }
@@ -87,7 +87,7 @@ export class ngfDrop extends ngf {
       this.stopEvent(event);
       return
     }
-    
+
     this.closeDrags()
 
     if ((this as any).element) {
