@@ -1,6 +1,12 @@
 # angular-file - Change Log
 All notable changes to this project will be documented here.
 
+## 3.5.0 - (2021-04-22)
+- Close #27 regarding click to upload same file twice
+  - ngOnChanges is listened to for when files or file is dropped then file input elm cleared
+- Dependencies updated
+- Demo updated with clear buttons next to inputs
+
 ## 3.4.0 - (2021-01-05)
 - Restructure things done in 3.3.1
 

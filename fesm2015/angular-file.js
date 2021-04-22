@@ -406,8 +406,6 @@ class ngf {
         this.element = element;
         this.filters = [];
         this.lastFileCount = 0;
-        //@Input() forceFilename:string
-        //@Input() forcePostname:string
         this.ngfFixOrientation = true;
         this.fileDropDisabled = false;
         this.selectable = false;
@@ -418,6 +416,7 @@ class ngf {
         this.fileChange = new EventEmitter();
         this.files = [];
         this.filesChange = new EventEmitter();
+        this.fileSelectStart = new EventEmitter();
         this.initFilters();
     }
     initFilters() {
@@ -447,11 +446,23 @@ class ngf {
         }, 0);
     }
     ngOnChanges(changes) {
+        var _a;
         if (changes.accept) {
             this.paramFileElm().setAttribute('accept', changes.accept.currentValue || '*');
         }
         if (changes.capturePaste) {
             this.evalCapturePaste();
+        }
+        // Did we go from having a file to not having a file? Clear file element then
+        if (changes.file && changes.file.previousValue && !changes.file.currentValue) {
+            this.clearFileElmValue();
+        }
+        // Did we go from having files to not having files? Clear file element then
+        if (changes.files) {
+            const filesWentToZero = changes.files.previousValue.length && !((_a = changes.files.currentValue) === null || _a === void 0 ? void 0 : _a.length);
+            if (filesWentToZero) {
+                this.clearFileElmValue();
+            }
         }
     }
     evalCapturePaste() {
@@ -480,22 +491,21 @@ class ngf {
     }
     paramFileElm() {
         if (this.fileElm)
-            return this.fileElm; //already defined
-        //elm is a file input
+            return this.fileElm; // already defined
+        // elm already is a file input
         const isFile = isFileInput(this.element.nativeElement);
-        if (isFile)
+        if (isFile) {
             return this.fileElm = this.element.nativeElement;
-        //create foo file input
-        const label = createInvisibleFileInputWrap();
-        this.fileElm = label.getElementsByTagName('input')[0];
-        this.fileElm.addEventListener('change', this.changeFn.bind(this));
-        this.element.nativeElement.appendChild(label);
-        return this.fileElm;
+        }
+        // the host elm is NOT a file input
+        return this.fileElm = createFileElm({
+            change: this.changeFn.bind(this)
+        });
     }
     enableSelecting() {
         let elm = this.element.nativeElement;
         if (isFileInput(elm)) {
-            const bindedHandler = _ev => this.beforeSelect();
+            const bindedHandler = event => this.beforeSelect(event);
             elm.addEventListener('click', bindedHandler);
             elm.addEventListener('touchstart', bindedHandler);
             return;
@@ -586,22 +596,21 @@ class ngf {
         const fileElm = this.paramFileElm();
         fileElm.click();
         //fileElm.dispatchEvent( new Event('click') );
-        this.beforeSelect();
+        this.beforeSelect(evt);
         return false;
     }
-    beforeSelect() {
+    beforeSelect(event) {
+        this.fileSelectStart.emit(event);
         if (this.files && this.lastFileCount === this.files.length)
             return;
-        //if no files in array, be sure browser doesnt prevent reselect of same file (see github issue 27)
+        // if no files in array, be sure browser does not prevent reselect of same file (see github issue 27)
+        this.clearFileElmValue();
+    }
+    clearFileElmValue() {
         this.fileElm.value = null;
     }
     isEmptyAfterSelection() {
         return !!this.element.nativeElement.attributes.multiple;
-    }
-    eventToTransfer(event) {
-        if (event.dataTransfer)
-            return event.dataTransfer;
-        return event.originalEvent ? event.originalEvent.dataTransfer : null;
     }
     stopEvent(event) {
         event.preventDefault();
@@ -622,7 +631,7 @@ class ngf {
         }
     }
     eventToFiles(event) {
-        const transfer = this.eventToTransfer(event);
+        const transfer = eventToTransfer(event);
         if (transfer) {
             if (transfer.files && transfer.files.length) {
                 return transfer.files;
@@ -680,17 +689,6 @@ class ngf {
     _fileSizeFilter(item) {
         return !(this.maxSize && item.size > this.maxSize);
     }
-    /** browsers try hard to conceal data about file drags, this tends to undo that */
-    filesToWriteableObject(files) {
-        const jsonFiles = [];
-        for (let x = 0; x < files.length; ++x) {
-            jsonFiles.push({
-                type: files[x].type,
-                kind: files[x]["kind"]
-            });
-        }
-        return jsonFiles;
-    }
 }
 ngf.decorators = [
     { type: Directive, args: [{
@@ -717,9 +715,34 @@ ngf.propDecorators = {
     fileChange: [{ type: Output }],
     files: [{ type: Input }],
     filesChange: [{ type: Output }],
+    fileSelectStart: [{ type: Output }],
     capturePaste: [{ type: Input }],
     onChange: [{ type: HostListener, args: ['change', ['$event'],] }]
 };
+/** browsers try hard to conceal data about file drags, this tends to undo that */
+function filesToWriteableObject(files) {
+    const jsonFiles = [];
+    for (let x = 0; x < files.length; ++x) {
+        jsonFiles.push({
+            type: files[x].type,
+            kind: files[x]["kind"]
+        });
+    }
+    return jsonFiles;
+}
+/** Only used when host element we are attached to is NOT a fileElement */
+function createFileElm({ change }) {
+    // use specific technique to hide file element within
+    const label = createInvisibleFileInputWrap();
+    this.fileElm = label.getElementsByTagName('input')[0];
+    this.fileElm.addEventListener('change', change);
+    return this.element.nativeElement.appendChild(label); // put on html stage
+}
+function eventToTransfer(event) {
+    if (event.dataTransfer)
+        return event.dataTransfer;
+    return event.originalEvent ? event.originalEvent.dataTransfer : null;
+}
 
 class ngfSelect extends ngf {
     constructor() {
@@ -768,9 +791,9 @@ class ngfDrop extends ngf {
             this.stopEvent(event);
             return;
         }
-        const transfer = this.eventToTransfer(event);
+        const transfer = eventToTransfer(event);
         let files = this.eventToFiles(event);
-        let jsonFiles = this.filesToWriteableObject(files);
+        let jsonFiles = filesToWriteableObject(files);
         this.dragFilesChange.emit(this.dragFiles = jsonFiles);
         if (files.length) {
             this.validDrag = this.isFilesValid(files);
@@ -782,7 +805,7 @@ class ngfDrop extends ngf {
         this.validDragChange.emit(this.validDrag);
         this.invalidDrag = !this.validDrag;
         this.invalidDragChange.emit(this.invalidDrag);
-        transfer.dropEffect = 'copy'; //change cursor and such
+        transfer.dropEffect = 'copy'; // change cursor and visual display
         this.stopEvent(event);
         this.fileOver.emit(true);
     }
@@ -966,5 +989,5 @@ ngfModule.decorators = [
  * Generated bundle index. Do not edit.
  */
 
-export { ngf, ngfBackground, ngfDrop, ngfFormData, ngfModule, ngfSelect, ngfSrc, ngfUploadStatus };
+export { eventToTransfer, filesToWriteableObject, ngf, ngfBackground, ngfDrop, ngfFormData, ngfModule, ngfSelect, ngfSrc, ngfUploadStatus };
 //# sourceMappingURL=angular-file.js.map
