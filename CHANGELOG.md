@@ -6,6 +6,7 @@ All notable changes to this project will be documented here.
   - ngOnChanges is listened to for when files or file is dropped then file input elm cleared
 - Dependencies updated
 - Demo updated with clear buttons next to inputs
+- Added `(fileSelectStart)` output event
 
 ## 3.4.0 - (2021-01-05)
 - Restructure things done in 3.3.1
