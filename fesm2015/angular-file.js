@@ -440,7 +440,7 @@ class ngf {
             this.paramFileElm().setAttribute('multiple', this.multiple);
         }
         this.evalCapturePaste();
-        //create reference to this class with one cycle delay to avoid ExpressionChangedAfterItHasBeenCheckedError
+        // create reference to this class with one cycle delay to avoid ExpressionChangedAfterItHasBeenCheckedError
         setTimeout(() => {
             this.directiveInit.emit(this);
         }, 0);
@@ -607,6 +607,8 @@ class ngf {
         this.clearFileElmValue();
     }
     clearFileElmValue() {
+        if (!this.fileElm)
+            return;
         this.fileElm.value = null;
     }
     isEmptyAfterSelection() {
