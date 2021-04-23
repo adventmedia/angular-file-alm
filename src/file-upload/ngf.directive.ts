@@ -80,7 +80,7 @@ export class ngf {
 
     this.evalCapturePaste();
 
-    //create reference to this class with one cycle delay to avoid ExpressionChangedAfterItHasBeenCheckedError
+    // create reference to this class with one cycle delay to avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(()=>{
       this.directiveInit.emit(this)
     }, 0)
@@ -282,6 +282,8 @@ export class ngf {
   }
 
   clearFileElmValue() {
+    if (!this.fileElm) return
+
     this.fileElm.value = null
   }
 
