@@ -1,14 +1,12 @@
 export const string = "import { Component } from '@angular/core'"+
 "\nimport { Subscription } from 'rxjs'"+
+"\nimport { string as template } from \"./simple-demo.template\""+
 "\nimport {"+
 "\n  HttpClient, HttpRequest,"+
 "\n  HttpResponse, HttpEvent"+
 "\n} from '@angular/common/http'"+
 "\n"+
-"\n@Component({"+
-"\n  selector: 'simple-demo',"+
-"\n  templateUrl: './simple-demo.html'"+
-"\n})"+
+"\n@Component({ selector: 'simple-demo', template: template })"+
 "\nexport class SimpleDemoComponent {"+
 "\n  accept = '*'"+
 "\n  files:File[] = []"+
