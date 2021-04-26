@@ -12,7 +12,7 @@
     "copy:dist": "cp -R dist/. ../master",
     "deploy": "npm run save && npm run deploy:dist && npm run deploy:gh-pages",
     "deploy:dist": "npm run update:push:dist && cd ../master/ && npm publish",
-    "deploy:gh-pages": "npm run update:gh-pages && npm run deploy",
+    "deploy:gh-pages": "npm run update:gh-pages && cd ../gh-pages && git push",
     "save": "npm run build && git add . && git commit -m 'update' && git push",
     "update:gh-pages": "cd ../gh-pages && npm install angular-file",
     "update:push:dist": "npm run copy:dist && cd ../master/ && git add . && git commit -m 'update' && git push"
