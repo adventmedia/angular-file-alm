@@ -102,7 +102,7 @@ export class ngf {
 
     // Did we go from having files to not having files? Clear file element then
     if (changes.files) {
-      const filesWentToZero = changes.files.previousValue.length && !changes.files.currentValue?.length
+      const filesWentToZero = changes.files.previousValue?.length && !changes.files.currentValue?.length
 
       if (filesWentToZero) {
         this.clearFileElmValue()

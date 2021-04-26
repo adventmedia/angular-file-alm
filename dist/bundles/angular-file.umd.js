@@ -742,7 +742,7 @@
             }, 0);
         };
         ngf.prototype.ngOnChanges = function (changes) {
-            var _a;
+            var _a, _b;
             if (changes.accept) {
                 this.paramFileElm().setAttribute('accept', changes.accept.currentValue || '*');
             }
@@ -755,7 +755,7 @@
             }
             // Did we go from having files to not having files? Clear file element then
             if (changes.files) {
-                var filesWentToZero = changes.files.previousValue.length && !((_a = changes.files.currentValue) === null || _a === void 0 ? void 0 : _a.length);
+                var filesWentToZero = ((_a = changes.files.previousValue) === null || _a === void 0 ? void 0 : _a.length) && !((_b = changes.files.currentValue) === null || _b === void 0 ? void 0 : _b.length);
                 if (filesWentToZero) {
                     this.clearFileElmValue();
                 }
@@ -800,8 +800,8 @@
             });
         };
         /** Only used when host element we are attached to is NOT a fileElement */
-        ngf.prototype.createFileElm = function (_b) {
-            var change = _b.change;
+        ngf.prototype.createFileElm = function (_c) {
+            var change = _c.change;
             // use specific technique to hide file element within
             var label = createInvisibleFileInputWrap();
             this.fileElm = label.getElementsByTagName('input')[0];

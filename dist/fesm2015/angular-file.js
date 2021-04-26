@@ -446,7 +446,7 @@ class ngf {
         }, 0);
     }
     ngOnChanges(changes) {
-        var _a;
+        var _a, _b;
         if (changes.accept) {
             this.paramFileElm().setAttribute('accept', changes.accept.currentValue || '*');
         }
@@ -459,7 +459,7 @@ class ngf {
         }
         // Did we go from having files to not having files? Clear file element then
         if (changes.files) {
-            const filesWentToZero = changes.files.previousValue.length && !((_a = changes.files.currentValue) === null || _a === void 0 ? void 0 : _a.length);
+            const filesWentToZero = ((_a = changes.files.previousValue) === null || _a === void 0 ? void 0 : _a.length) && !((_b = changes.files.currentValue) === null || _b === void 0 ? void 0 : _b.length);
             if (filesWentToZero) {
                 this.clearFileElmValue();
             }
