@@ -151,9 +151,20 @@ export class ngf {
     }
 
     // the host elm is NOT a file input
-    return this.fileElm = createFileElm({
+    return this.fileElm = this.createFileElm({
       change: this.changeFn.bind(this)
     })
+  }
+
+  /** Only used when host element we are attached to is NOT a fileElement */
+  createFileElm({change}: {change:() => any}) {
+    // use specific technique to hide file element within
+    const label = createInvisibleFileInputWrap()
+
+    this.fileElm = label.getElementsByTagName('input')[0]
+    this.fileElm.addEventListener('change', change);
+
+    return this.element.nativeElement.appendChild( label ) // put on html stage
   }
 
   enableSelecting(){
@@ -399,17 +410,6 @@ export function filesToWriteableObject( files:File[] ):dragMeta[]{
     })
   }
   return jsonFiles
-}
-
-/** Only used when host element we are attached to is NOT a fileElement */
-function createFileElm({change}: {change:() => any}) {
-  // use specific technique to hide file element within
-  const label = createInvisibleFileInputWrap()
-
-  this.fileElm = label.getElementsByTagName('input')[0]
-  this.fileElm.addEventListener('change', change);
-
-  return this.element.nativeElement.appendChild( label ) // put on html stage
 }
 
 export function eventToTransfer(event: any): TransferObject {
