@@ -44,6 +44,10 @@ export declare class ngf {
     evalCapturePaste(): void;
     destroyPasteListener(): void;
     paramFileElm(): any;
+    /** Only used when host element we are attached to is NOT a fileElement */
+    createFileElm({ change }: {
+        change: () => any;
+    }): any;
     enableSelecting(): void;
     getValidFiles(files: File[]): File[];
     getInvalidFiles(files: File[]): InvalidFileItem[];

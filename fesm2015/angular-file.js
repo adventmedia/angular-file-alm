@@ -498,9 +498,17 @@ class ngf {
             return this.fileElm = this.element.nativeElement;
         }
         // the host elm is NOT a file input
-        return this.fileElm = createFileElm({
+        return this.fileElm = this.createFileElm({
             change: this.changeFn.bind(this)
         });
+    }
+    /** Only used when host element we are attached to is NOT a fileElement */
+    createFileElm({ change }) {
+        // use specific technique to hide file element within
+        const label = createInvisibleFileInputWrap();
+        this.fileElm = label.getElementsByTagName('input')[0];
+        this.fileElm.addEventListener('change', change);
+        return this.element.nativeElement.appendChild(label); // put on html stage
     }
     enableSelecting() {
         let elm = this.element.nativeElement;
@@ -731,14 +739,6 @@ function filesToWriteableObject(files) {
         });
     }
     return jsonFiles;
-}
-/** Only used when host element we are attached to is NOT a fileElement */
-function createFileElm({ change }) {
-    // use specific technique to hide file element within
-    const label = createInvisibleFileInputWrap();
-    this.fileElm = label.getElementsByTagName('input')[0];
-    this.fileElm.addEventListener('change', change);
-    return this.element.nativeElement.appendChild(label); // put on html stage
 }
 function eventToTransfer(event) {
     if (event.dataTransfer)
