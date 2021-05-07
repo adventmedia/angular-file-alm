@@ -160,11 +160,12 @@ export class ngf {
   createFileElm({change}: {change:() => any}) {
     // use specific technique to hide file element within
     const label = createInvisibleFileInputWrap()
+    const fileElm = label.getElementsByTagName('input')[0]
 
-    this.fileElm = label.getElementsByTagName('input')[0]
-    this.fileElm.addEventListener('change', change);
+    fileElm.addEventListener('change', change);
+    this.element.nativeElement.appendChild( label ) // put on html stage
 
-    return this.element.nativeElement.appendChild( label ) // put on html stage
+    return fileElm
   }
 
   enableSelecting(){
