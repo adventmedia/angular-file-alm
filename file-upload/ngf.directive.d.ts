@@ -47,7 +47,7 @@ export declare class ngf {
     /** Only used when host element we are attached to is NOT a fileElement */
     createFileElm({ change }: {
         change: () => any;
-    }): any;
+    }): HTMLInputElement;
     enableSelecting(): void;
     getValidFiles(files: File[]): File[];
     getInvalidFiles(files: File[]): InvalidFileItem[];
