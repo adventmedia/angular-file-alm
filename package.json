@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/ackerapple/angular-file#readme",
   "dependencies": {
-    "angular-file": "git+https://github.com/ackerapple/angular-file.git"
+    "angular-file": "git+https://github.com/qkevinto/angular-file.git"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.5",
