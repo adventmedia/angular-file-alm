@@ -1,6 +1,10 @@
 # angular-file - Change Log
 All notable changes to this project will be documented here.
 
+## 3.6.0 - (2021-05-10)
+- Issue #98 fixed by PR #99 for this.fileElm was actually targeting the label wrapper
+  - angular-file places a label wrapping a file on html and when saved to memory label targeted and not file input
+
 ## 3.5.3 - (2021-04-26)
 - Fix 3.5.0 variable references and possible undefined error
 

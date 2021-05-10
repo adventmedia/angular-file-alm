@@ -804,9 +804,10 @@
             var change = _c.change;
             // use specific technique to hide file element within
             var label = createInvisibleFileInputWrap();
-            this.fileElm = label.getElementsByTagName('input')[0];
-            this.fileElm.addEventListener('change', change);
-            return this.element.nativeElement.appendChild(label); // put on html stage
+            var fileElm = label.getElementsByTagName('input')[0];
+            fileElm.addEventListener('change', change);
+            this.element.nativeElement.appendChild(label); // put on html stage
+            return fileElm;
         };
         ngf.prototype.enableSelecting = function () {
             var _this = this;
