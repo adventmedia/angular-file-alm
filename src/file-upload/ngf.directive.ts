@@ -37,7 +37,7 @@ export class ngf {
   @Input() lastBaseUrl!: string//base64 last file uploaded url
   @Output() lastBaseUrlChange:EventEmitter<string> = new EventEmitter()
 
-  @Input() file!: File//last file uploaded
+  @Input() file: File | null//last file uploaded
   @Output() fileChange: EventEmitter<File> = new EventEmitter()
 
   @Input() files:File[] = []
