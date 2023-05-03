@@ -29,7 +29,7 @@ export declare class ngf {
     }[]>;
     lastBaseUrl: string;
     lastBaseUrlChange: EventEmitter<string>;
-    file: File | null;
+    file?: File;
     fileChange: EventEmitter<File>;
     files: File[];
     filesChange: EventEmitter<File[]>;
